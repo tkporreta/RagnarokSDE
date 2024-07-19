@@ -86,7 +86,10 @@ namespace SDE.View.Dialogs {
 						case "Weapon Level":
 							_tbWeaponLevel.Text = keyPair.Value;
 							break;
-						case "Required Level":
+                        case "Armor Level":
+                            _tbArmorLevel.Text = keyPair.Value;
+                            break;
+                        case "Required Level":
 							_tbRequiredLevel.Text = keyPair.Value;
 							break;
 						case "Applicable Job":
@@ -110,7 +113,8 @@ namespace SDE.View.Dialogs {
 			_tbWeight.Text = "";
 			_tbProperty.Text = "";
 			_tbWeaponLevel.Text = "";
-			_tbRequiredLevel.Text = "";
+            _tbArmorLevel.Text = "";
+            _tbRequiredLevel.Text = "";
 			_tbApplicableJob.Text = "";
 		}
 
@@ -245,7 +249,13 @@ namespace SDE.View.Dialogs {
 
 			_showPreview();
 		}
-		private void _tbRequiredLevel_TextChanged(object sender, TextChangedEventArgs e) {
+        private void _tbArmorLevel_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (_eventsDisabled) return;
+
+            _showPreview();
+        }
+        private void _tbRequiredLevel_TextChanged(object sender, TextChangedEventArgs e) {
 			if (_eventsDisabled) return;
 
 			_showPreview();
@@ -449,7 +459,8 @@ namespace SDE.View.Dialogs {
 			}
 
 			_addDescFor(ref description, _tbWeaponLevel.Text, 8);
-			_addDescFor(ref description, _tbRequiredLevel.Text, 9);
+            _addDescFor(ref description, _tbArmorLevel.Text, 11);
+            _addDescFor(ref description, _tbRequiredLevel.Text, 9);
 			_addDescFor(ref description, _tbApplicableJob.Text, 10);
 
 			return description;

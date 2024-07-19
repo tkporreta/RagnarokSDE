@@ -208,7 +208,30 @@ namespace SDE.Editor.Engines.RepairEngine {
 										errors.Add(new CiError(ValidationErrors.CiParseError, citem.Key, "Parse: failed to parse WeaponLevel field, found '" + value + "'.", ServerDbs.CItems, this));
 									}
 								}
-								else if (param == ParameterHolderKeys.Weight && SdeAppConfiguration.VaCiWeight) {
+								// ADD ArmorLevel
+                                else if (param == ParameterHolderKeys.ArmorLevel && SdeAppConfiguration.VaCiArmorLevel)
+                                {
+                                    int ival;
+
+                                    if (Int32.TryParse(value, out ival))
+                                    {
+                                        var name = sitem.GetValue<string>(ServerItemAttributes.Name);
+                                        var sval = sitem.GetIntNoThrow(ServerItemAttributes.ArmorLevel);
+
+                                        if (name.EndsWith(" Box"))
+                                            continue;
+
+                                        if (ival != sval)
+                                        {
+                                            errors.Add(new CiError(ValidationErrors.CiArmorLevel, citem.Key, "ArmorLevel: found '" + value + "', expected '" + sval + "'.", ServerDbs.CItems, this));
+                                        }
+                                    }
+                                    else
+                                    {
+                                        errors.Add(new CiError(ValidationErrors.CiParseError, citem.Key, "Parse: failed to parse ArmorLevel field, found '" + value + "'.", ServerDbs.CItems, this));
+                                    }
+                                }
+                                else if (param == ParameterHolderKeys.Weight && SdeAppConfiguration.VaCiWeight) {
 									int ival = (int)(FormatConverters.SingleConverter(value) * 10);
 
 									var sval = sitem.GetIntNoThrow(ServerItemAttributes.Weight);

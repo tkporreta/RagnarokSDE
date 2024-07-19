@@ -50,6 +50,7 @@
                         <Label Content="Weight" Grid.Row="6" />
                         <Label Content="Property" Grid.Row="7" />
                         <Label Content="Weapon Level" Grid.Row="8" />
+                        <Label Content="Armor Level" Grid.Row="11" />
                         <Label Content="Required Level" Grid.Row="9" />
                         <Label Content="Applicable Job" Grid.Row="10" />
                         <TextBox Name="_tbDescription" TextChanged="_tbDescription_TextChanged" Margin="3" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" MinHeight="75" Grid.Row="0" Grid.Column="1" AcceptsReturn="True" />
@@ -61,6 +62,7 @@
                         <TextBox Name="_tbWeight" Margin="3" Grid.Row="6" Grid.Column="1" TextChanged="_tbWeight_TextChanged" />
                         <TextBox Name="_tbProperty" Margin="3" Grid.Row="7" Grid.Column="1" TextChanged="_tbProperty_TextChanged" />
                         <TextBox Name="_tbWeaponLevel" Margin="3" Grid.Row="8" Grid.Column="1" TextChanged="_tbWeaponLevel_TextChanged" />
+                        <TextBox Name="_tbArmorLevel" Margin="3" Grid.Row="11" Grid.Column="1" TextChanged="_tbArmorLevel_TextChanged" />
                         <TextBox Name="_tbRequiredLevel" Margin="3" Grid.Row="9" Grid.Column="1" TextChanged="_tbRequiredLevel_TextChanged" />
                         <TextBox Name="_tbApplicableJob" Height="auto" TextWrapping="Wrap" Margin="3" Grid.Row="10" Grid.Column="1" TextChanged="_tbApplicableJob_TextChanged" />
 

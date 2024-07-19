@@ -272,7 +272,8 @@ namespace SDE.Editor.Generic.Parsers {
 						table.SetRaw(itemId, ServerItemAttributes.Gender, DbIOUtils.LoadFlag(item["Gender"], genderFlags, defaultGender));
 						table.SetRaw(itemId, ServerItemAttributes.Location, DbIOUtils.LoadFlag(item["Locations"], eqpFlags, "0"));
 						table.SetRaw(itemId, ServerItemAttributes.WeaponLevel, item["WeaponLevel"] ?? "");
-						table.SetRaw(itemId, ServerItemAttributes.EquipLevelMin, item["EquipLevelMin"] ?? "");
+                        table.SetRaw(itemId, ServerItemAttributes.ArmorLevel, item["ArmorLevel"] ?? "");
+                        table.SetRaw(itemId, ServerItemAttributes.EquipLevelMin, item["EquipLevelMin"] ?? "");
 						table.SetRaw(itemId, ServerItemAttributes.EquipLevelMax, item["EquipLevelMax"] ?? "");
 						table.SetRaw(itemId, ServerItemAttributes.Refineable, item["Refineable"] ?? "false");
 						table.SetRaw(itemId, ServerItemAttributes.ClassNumber, item["View"] ?? "");
@@ -393,7 +394,8 @@ namespace SDE.Editor.Generic.Parsers {
 						table.SetRaw(itemId, ServerItemAttributes.Gender, DbIOUtils.LoadFlag(item["Gender"], genderFlags, defaultGender, false));
 						table.SetRaw(itemId, ServerItemAttributes.Location, DbIOUtils.LoadFlag(item["Locations"], eqpFlags, "0", false));
 						table.SetRaw(itemId, ServerItemAttributes.WeaponLevel, item["WeaponLevel"] ?? "");
-						table.SetRaw(itemId, ServerItemAttributes.EquipLevelMin, item["EquipLevelMin"] ?? "");
+                        table.SetRaw(itemId, ServerItemAttributes.ArmorLevel, item["ArmorLevel"] ?? "");
+                        table.SetRaw(itemId, ServerItemAttributes.EquipLevelMin, item["EquipLevelMin"] ?? "");
 						table.SetRaw(itemId, ServerItemAttributes.EquipLevelMax, item["EquipLevelMax"] ?? "");
 						table.SetRaw(itemId, ServerItemAttributes.Refineable, item["Refineable"] ?? "false");
 						table.SetRaw(itemId, ServerItemAttributes.ClassNumber, item["View"] ?? "");
@@ -514,7 +516,8 @@ namespace SDE.Editor.Generic.Parsers {
 					table.SetRaw(itemId, ServerItemAttributes.Gender, item["Gender"] ?? defaultGender);
 					table.SetRaw(itemId, ServerItemAttributes.Location, item["Loc"] ?? "");
 					table.SetRaw(itemId, ServerItemAttributes.WeaponLevel, item["WeaponLv"] ?? "");
-					table.SetRaw(itemId, ServerItemAttributes.EquipLevel, item["EquipLv"] ?? "");
+                    table.SetRaw(itemId, ServerItemAttributes.ArmorLevel, item["ArmorLv"] ?? "");
+                    table.SetRaw(itemId, ServerItemAttributes.EquipLevel, item["EquipLv"] ?? "");
 					table.SetRaw(itemId, ServerItemAttributes.Refineable, item["Refine"] ?? defaultRefineable);
 					table.SetRaw(itemId, ServerItemAttributes.ClassNumber, item["View"] ?? "");
 					table.SetRaw(itemId, ServerItemAttributes.Script, item["Script"] ?? "");
@@ -1014,7 +1017,12 @@ namespace SDE.Editor.Generic.Parsers {
 					builder.AppendLine("    WeaponLevel: " + value);
 				}
 
-				if ((value = tuple.GetValue<int>(ServerItemAttributes.EquipLevelMin)) != 0) {
+                if ((value = tuple.GetValue<int>(ServerItemAttributes.ArmorLevel)) != 0)
+                {
+                    builder.AppendLine("    ArmorLevel: " + value);
+                }
+
+                if ((value = tuple.GetValue<int>(ServerItemAttributes.EquipLevelMin)) != 0) {
 					builder.AppendLine("    EquipLevelMin: " + value);
 				}
 
@@ -1534,7 +1542,8 @@ namespace SDE.Editor.Generic.Parsers {
 			DbIOFormatting.TrySetGender(tuple, builder, ServerItemAttributes.Gender, "2");
 			DbIOFormatting.TrySetIfDefaultLocation(tuple, builder, ServerItemAttributes.Location);
 			DbIOFormatting.TrySetIfDefaultEmpty(tuple, builder, ServerItemAttributes.WeaponLevel, "0");
-			DbIOFormatting.TrySetIfDefaultEmpty(tuple, builder, ServerItemAttributes.EquipLevel, "0");
+            DbIOFormatting.TrySetIfDefaultEmpty(tuple, builder, ServerItemAttributes.ArmorLevel, "0");
+            DbIOFormatting.TrySetIfDefaultEmpty(tuple, builder, ServerItemAttributes.EquipLevel, "0");
 			DbIOFormatting.TrySetIfRefineable(tuple, builder, ServerItemAttributes.Refineable, true);
 			DbIOFormatting.TrySetIfDefaultEmpty(tuple, builder, ServerItemAttributes.ClassNumber, "0");
 			DbIOFormatting.TrySetIfDefaultBoolean(tuple, builder, ServerItemAttributes.BindOnEquip, false);
@@ -1840,7 +1849,12 @@ namespace SDE.Editor.Generic.Parsers {
 					builder.AppendLine("	WeaponLevel: " + value);
 				}
 
-				if ((value = tuple.GetValue<int>(ServerItemAttributes.EquipLevelMin)) != 0) {
+                if ((value = tuple.GetValue<int>(ServerItemAttributes.ArmorLevel)) != 0)
+                {
+                    builder.AppendLine("	ArmorLevel: " + value);
+                }
+
+                if ((value = tuple.GetValue<int>(ServerItemAttributes.EquipLevelMin)) != 0) {
 					builder.AppendLine("	EquipLevelMin: " + value);
 				}
 

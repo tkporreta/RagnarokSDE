@@ -347,6 +347,11 @@ namespace SDE.ApplicationConfiguration {
 			set { ConfigAsker["[Server database editor - Validation ci - WeaponLevel]"] = value.ToString(); }
 		}
 
+		public static bool VaCiArmorLevel{
+			get { return Boolean.Parse(ConfigAsker["[Server database editor - Validation ci - ArmorLevel]", "true"]); }
+			set { ConfigAsker["[Server database editor - Validation ci - ArmorLevel]"] = value.ToString(); }
+		}
+
 		public static bool VaCiWeight {
 			get { return Boolean.Parse(ConfigAsker["[Server database editor - Validation ci - Weight]", "true"]); }
 			set { ConfigAsker["[Server database editor - Validation ci - Weight]"] = value.ToString(); }

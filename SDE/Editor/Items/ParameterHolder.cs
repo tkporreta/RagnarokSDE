@@ -19,7 +19,8 @@ namespace SDE.Editor.Items {
 		public static readonly ParameterHolderKeys Weight = new ParameterHolderKeys("Weight");
 		public static readonly ParameterHolderKeys Property = new ParameterHolderKeys("Property");
 		public static readonly ParameterHolderKeys WeaponLevel = new ParameterHolderKeys("Weapon Level");
-		public static readonly ParameterHolderKeys RequiredLevel = new ParameterHolderKeys("Required Level");
+        public static readonly ParameterHolderKeys ArmorLevel = new ParameterHolderKeys("Armor Level");
+        public static readonly ParameterHolderKeys RequiredLevel = new ParameterHolderKeys("Required Level");
 		public static readonly ParameterHolderKeys ApplicableJob = new ParameterHolderKeys("Applicable Job");
 		public static readonly ParameterHolderKeys ApplicablePet = new ParameterHolderKeys("Applicable Pet");
 		public static readonly ParameterHolderKeys Location = new ParameterHolderKeys("Location");
@@ -60,7 +61,8 @@ namespace SDE.Editor.Items {
 			{ "Required Lv", RequiredLevel },
 			{ "Req LV", RequiredLevel },
 			{ "Weapon lvl", WeaponLevel },
-			{ "무게", Weight },
+            { "Armor lvl", ArmorLevel },
+            { "무게", Weight },
 			{ "방어", Defense },
 			{ "요구", RequiredLevel },
 			{ "요구 레벨", RequiredLevel },
@@ -83,7 +85,8 @@ namespace SDE.Editor.Items {
 			ParameterHolderKeys.Weight,
 			ParameterHolderKeys.Property,
 			ParameterHolderKeys.WeaponLevel,
-			ParameterHolderKeys.RequiredLevel,
+            ParameterHolderKeys.ArmorLevel,
+            ParameterHolderKeys.RequiredLevel,
 			ParameterHolderKeys.ApplicableJob,
 			ParameterHolderKeys.Location,
 			ParameterHolderKeys.ApplicablePet,

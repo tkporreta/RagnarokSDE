@@ -88,6 +88,7 @@
                             <StackPanel Grid.Column="1">
                                 <CheckBox Foreground="{StaticResource TextForeground}" Name="_cbCiRequiredLevel" Content="Invalid value for RequiredLevel field" Margin="3" />
                                 <CheckBox Foreground="{StaticResource TextForeground}" Name="_cbCiWeaponLevel" Content="Invalid value for WeaponLevel field" Margin="3" />
+                                <CheckBox Foreground="{StaticResource TextForeground}" Name="_cbCiArmorLevel" Content="Invalid value for ArmorLevel field" Margin="3" />
                                 <CheckBox Foreground="{StaticResource TextForeground}" Name="_cbCiWeight" Content="Invalid value for Weight field" Margin="3" />
                                 <CheckBox Foreground="{StaticResource TextForeground}" Name="_cbCiLocation" Content="Invalid value for Location field" Margin="3" />
                                 <CheckBox Foreground="{StaticResource TextForeground}" Name="_cbCiCompoundOn" Content="Invalid value for CompoundOn field" Margin="3" />

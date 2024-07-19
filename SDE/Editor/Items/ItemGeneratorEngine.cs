@@ -137,7 +137,8 @@ namespace SDE.Editor.Items {
 					_autoAdd(ServerItemAttributes.Attack, ParameterHolderKeys.Attack, tupleSource, holder);
 					_autoAddWeight(tupleSource, holder);
 					_autoAdd(ServerItemAttributes.WeaponLevel, ParameterHolderKeys.WeaponLevel, tupleSource, holder);
-					_autoAddJob(tupleSource, holder, _getInt(equipLevelAttribute, tupleSource));
+                    _autoAdd(ServerItemAttributes.ArmorLevel, ParameterHolderKeys.ArmorLevel, tupleSource, holder);
+                    _autoAddJob(tupleSource, holder, _getInt(equipLevelAttribute, tupleSource));
 					_autoAddElement(tupleSource, holder);
 					break;
 				case TypeType.Ammo:

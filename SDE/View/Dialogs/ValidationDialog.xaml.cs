@@ -78,7 +78,8 @@ namespace SDE.View.Dialogs {
 			Binder.Bind(_cbCiProperty, () => SdeAppConfiguration.VaCiProperty);
 			Binder.Bind(_cbCiRequiredLevel, () => SdeAppConfiguration.VaCiRequiredLevel);
 			Binder.Bind(_cbCiWeaponLevel, () => SdeAppConfiguration.VaCiWeaponLevel);
-			Binder.Bind(_cbCiWeight, () => SdeAppConfiguration.VaCiWeight);
+            Binder.Bind(_cbCiArmorLevel, () => SdeAppConfiguration.VaCiArmorLevel);
+            Binder.Bind(_cbCiWeight, () => SdeAppConfiguration.VaCiWeight);
 			Binder.Bind(_cbCiLocation, () => SdeAppConfiguration.VaCiLocation);
 			Binder.Bind(_cbCiCompoundOn, () => SdeAppConfiguration.VaCiCompoundOn);
 			Binder.Bind(_cbCiNumberOfSlots, () => SdeAppConfiguration.VaCiNumberOfSlots);
