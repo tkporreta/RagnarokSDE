@@ -276,7 +276,8 @@ namespace SDE.Editor.Generic.Parsers {
                         table.SetRaw(itemId, ServerItemAttributes.EquipLevelMin, item["EquipLevelMin"] ?? "");
 						table.SetRaw(itemId, ServerItemAttributes.EquipLevelMax, item["EquipLevelMax"] ?? "");
 						table.SetRaw(itemId, ServerItemAttributes.Refineable, item["Refineable"] ?? "false");
-						table.SetRaw(itemId, ServerItemAttributes.ClassNumber, item["View"] ?? "");
+                        table.SetRaw(itemId, ServerItemAttributes.Gradable, item["Gradable"] ?? "false");
+                        table.SetRaw(itemId, ServerItemAttributes.ClassNumber, item["View"] ?? "");
 						table.SetRaw(itemId, ServerItemAttributes.AliasName, item["AliasName"] ?? "");
 						table.SetRaw(itemId, ServerItemAttributes.Flags, DbIOUtils.LoadFlag<ItemFlagType>(item["Flags"], "0"));
 
@@ -398,7 +399,8 @@ namespace SDE.Editor.Generic.Parsers {
                         table.SetRaw(itemId, ServerItemAttributes.EquipLevelMin, item["EquipLevelMin"] ?? "");
 						table.SetRaw(itemId, ServerItemAttributes.EquipLevelMax, item["EquipLevelMax"] ?? "");
 						table.SetRaw(itemId, ServerItemAttributes.Refineable, item["Refineable"] ?? "false");
-						table.SetRaw(itemId, ServerItemAttributes.ClassNumber, item["View"] ?? "");
+                        table.SetRaw(itemId, ServerItemAttributes.Gradable, item["Gradable"] ?? "false");
+                        table.SetRaw(itemId, ServerItemAttributes.ClassNumber, item["View"] ?? "");
 						table.SetRaw(itemId, ServerItemAttributes.AliasName, item["AliasName"] ?? "");
 						table.SetRaw(itemId, ServerItemAttributes.Flags, DbIOUtils.LoadFlag<ItemFlagType>(item["Flags"], "0"));
 						table.SetRaw(itemId, ServerItemAttributes.CustomFlags, DbIOUtils.LoadFlag<ItemCustomFlagType>(item["CustomFlags"], "0"));
@@ -502,8 +504,22 @@ namespace SDE.Editor.Generic.Parsers {
 								type = "4";
 						}
 					}
+                    var defaultGradable = "false";
 
-					table.SetRaw(itemId, ServerItemAttributes.Type, type);
+                    if (type == "4" || type == "5")
+                    {
+                        defaultGradable = "true";
+
+                        if (!SdeAppConfiguration.RevertItemTypes)
+                        {
+                            if (type == "4")
+                                type = "5";
+                            else if (type == "5")
+                                type = "4";
+                        }
+                    }
+
+                    table.SetRaw(itemId, ServerItemAttributes.Type, type);
 					table.SetRaw(itemId, ServerItemAttributes.Buy, item["Buy"] ?? "");
 					table.SetRaw(itemId, ServerItemAttributes.Sell, item["Sell"] ?? "");
 					table.SetRaw(itemId, ServerItemAttributes.Weight, item["Weight"] ?? "0");
@@ -519,7 +535,8 @@ namespace SDE.Editor.Generic.Parsers {
                     table.SetRaw(itemId, ServerItemAttributes.ArmorLevel, item["ArmorLv"] ?? "");
                     table.SetRaw(itemId, ServerItemAttributes.EquipLevel, item["EquipLv"] ?? "");
 					table.SetRaw(itemId, ServerItemAttributes.Refineable, item["Refine"] ?? defaultRefineable);
-					table.SetRaw(itemId, ServerItemAttributes.ClassNumber, item["View"] ?? "");
+                    table.SetRaw(itemId, ServerItemAttributes.Gradable, item["Refine"] ?? defaultGradable);
+                    table.SetRaw(itemId, ServerItemAttributes.ClassNumber, item["View"] ?? "");
 					table.SetRaw(itemId, ServerItemAttributes.Script, item["Script"] ?? "");
 					table.SetRaw(itemId, ServerItemAttributes.OnEquipScript, item["OnEquipScript"] ?? "");
 					table.SetRaw(itemId, ServerItemAttributes.OnUnequipScript, item["OnUnequipScript"] ?? "");
@@ -1034,7 +1051,12 @@ namespace SDE.Editor.Generic.Parsers {
 					builder.AppendLine("    Refineable: true");
 				}
 
-				if ((valueS = tuple.GetValue<string>(ServerItemAttributes.AliasName)) != "") {
+                if ((valueB = tuple.GetValue<bool>(ServerItemAttributes.Gradable)) != false)
+                {
+                    builder.AppendLine("    Gradable: true");
+                }
+
+                if ((valueS = tuple.GetValue<string>(ServerItemAttributes.AliasName)) != "") {
 					builder.AppendLine("    AliasName: " + DbIOUtils.Id2Name(itemDb, ServerItemAttributes.AegisName, valueS));
 				}
 
@@ -1545,7 +1567,8 @@ namespace SDE.Editor.Generic.Parsers {
             DbIOFormatting.TrySetIfDefaultEmpty(tuple, builder, ServerItemAttributes.ArmorLevel, "0");
             DbIOFormatting.TrySetIfDefaultEmpty(tuple, builder, ServerItemAttributes.EquipLevel, "0");
 			DbIOFormatting.TrySetIfRefineable(tuple, builder, ServerItemAttributes.Refineable, true);
-			DbIOFormatting.TrySetIfDefaultEmpty(tuple, builder, ServerItemAttributes.ClassNumber, "0");
+            DbIOFormatting.TrySetIfGradable(tuple, builder, ServerItemAttributes.Gradable, true);
+            DbIOFormatting.TrySetIfDefaultEmpty(tuple, builder, ServerItemAttributes.ClassNumber, "0");
 			DbIOFormatting.TrySetIfDefaultBoolean(tuple, builder, ServerItemAttributes.BindOnEquip, false);
 			DbIOFormatting.TrySetIfDefaultBoolean(tuple, builder, ServerItemAttributes.ForceSerial, false);
 			DbIOFormatting.TrySetIfDefaultBoolean(tuple, builder, ServerItemAttributes.BuyingStore, false);
@@ -1866,7 +1889,12 @@ namespace SDE.Editor.Generic.Parsers {
 					builder.AppendLine("	Refineable: true");
 				}
 
-				if ((valueS = tuple.GetValue<string>(ServerItemAttributes.Sprite)) != "") {
+                if ((valueB = tuple.GetValue<bool>(ServerItemAttributes.Gradable)) != false)
+                {
+                    builder.AppendLine("	Gradable: true");
+                }
+
+                if ((valueS = tuple.GetValue<string>(ServerItemAttributes.Sprite)) != "") {
 					builder.AppendLine("	AliasName: " + valueS);
 				}
 

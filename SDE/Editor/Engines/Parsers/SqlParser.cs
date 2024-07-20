@@ -164,7 +164,8 @@ namespace SDE.Editor.Engines.Parsers {
 				_addQuotesIfNotNull(_notNullDefault(_parseEquip(tuple.GetValue<string>(16), true), "0")), // EquipMin
 				_addQuotesIfNotNull(_defaultNull(_parseEquip(tuple.GetValue<string>(16), false))), // EquipMax
 				_addQuotesIfNotNull(_notNullDefault(_parseAndSetToInteger(tuple.GetValue<int>(17)), "0")), // Refineable
-				_addQuotesIfNotNull(_notNullDefault(_parseAndSetToInteger(tuple.GetValue<string>(18)), "0")), // View
+                _addQuotesIfNotNull(_notNullDefault(_parseAndSetToInteger(tuple.GetValue<int>(18)), "0")), // Gradable
+                _addQuotesIfNotNull(_notNullDefault(_parseAndSetToInteger(tuple.GetValue<string>(19)), "0")), // View
 				_addQuotesIfNotNull(_notNullDefault(_parseAndSetToInteger(tuple.GetValue<int>(ServerItemAttributes.BindOnEquip)), "0")),
 				_addQuotesIfNotNull(_notNullDefault(_parseAndSetToInteger(tuple.GetValue<int>(ServerItemAttributes.ForceSerial)), "0")),
 				_addQuotesIfNotNull(_notNullDefault(_parseAndSetToInteger(tuple.GetValue<int>(ServerItemAttributes.BuyingStore)), "0")),

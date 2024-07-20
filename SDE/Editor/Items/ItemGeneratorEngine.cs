@@ -134,7 +134,25 @@ namespace SDE.Editor.Items {
 						}
 					}
 
-					_autoAdd(ServerItemAttributes.Attack, ParameterHolderKeys.Attack, tupleSource, holder);
+                    if (!tupleSource.GetValue<bool>(ServerItemAttributes.Gradable))
+                    {
+                        if (!description.Contains("Impossible to gradable") &&
+                            !description.Contains("Cannot be upgraded") &&
+                            !description.ToLower().Contains("rental item"))
+                        {
+                            description += "\r\nImpossible to refine this item.";
+                        }
+                    }
+
+                    if (tupleSource.GetValue<bool>(ServerItemAttributes.Gradable))
+                    {
+                        if (description.Contains("Impossible to gradable"))
+                        {
+                            description = description.Replace("Impossible to gradable this item.", "").Trim('\r', '\n');
+                        }
+                    }
+
+                    _autoAdd(ServerItemAttributes.Attack, ParameterHolderKeys.Attack, tupleSource, holder);
 					_autoAddWeight(tupleSource, holder);
 					_autoAdd(ServerItemAttributes.WeaponLevel, ParameterHolderKeys.WeaponLevel, tupleSource, holder);
                     _autoAdd(ServerItemAttributes.ArmorLevel, ParameterHolderKeys.ArmorLevel, tupleSource, holder);
@@ -189,7 +207,26 @@ namespace SDE.Editor.Items {
 						}
 					}
 
-					_autoAdd(ServerItemAttributes.Defense, ParameterHolderKeys.Defense, tupleSource, holder);
+                    if ((_getInt(ServerItemAttributes.Location, tupleSource) & 374) != 0)
+                    {
+                        if (!tupleSource.GetValue<bool>(ServerItemAttributes.Gradable))
+                        {
+                            if (!description.Contains("Impossible to gradable"))
+                            {
+                                description += "\r\nImpossible to gradable this item.";
+                            }
+                        }
+
+                        if (tupleSource.GetValue<bool>(ServerItemAttributes.Gradable))
+                        {
+                            if (description.Contains("Impossible to gradable"))
+                            {
+                                description = description.Replace("Impossible to gradable this item.", "").Trim('\r', '\n');
+                            }
+                        }
+                    }
+
+                    _autoAdd(ServerItemAttributes.Defense, ParameterHolderKeys.Defense, tupleSource, holder);
 					_autoAddEquippedOn(ServerItemAttributes.Location, ParameterHolderKeys.Location, tupleSource, holder);
 					_autoAddWeight(tupleSource, holder);
 					_autoAddJob(tupleSource, holder, _getInt(equipLevelAttribute, tupleSource));

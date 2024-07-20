@@ -61,7 +61,8 @@ namespace SDE.Editor.Generic.Core {
 		public static IValueConverter GetNoHexJobSetHexJob = new ApplicableJobConverter();
 		public static IValueConverter GetHexToIntSetInt = new HexToIntConverter();
 		public static IValueConverter GetBooleanSetRefinableString = new RefineableConverter();
-		public static IValueConverter GetSetResourceString = new ItemCdeResourceConverter();
+        public static IValueConverter GetBooleanSetGradableString = new GradableConverter();
+        public static IValueConverter GetSetResourceString = new ItemCdeResourceConverter();
 		public static IValueConverter GetSetUniversalString = new ItemCdeUniversalConverter();
 		public static IValueConverter GetSetDisplayString = new ItemCdeDisplayConverter();
 		public static IValueConverter GetSetDescriptionString = new ItemCdeDescriptionConverter();
@@ -550,7 +551,26 @@ namespace SDE.Editor.Generic.Core {
 					//}
 				}
 
-				return value;
+                if (Int32.TryParse(value.ToString(), out ival))
+                {
+                    bool gradable = source.GetValue<bool>(ServerItemAttributes.Gradable);
+                    if (!gradable)
+                    {
+                        if (ival == 4 || ival == 5)
+                        {
+                            source.SetRawValue(ServerItemAttributes.Gradable, "0");
+                        }
+                        else
+                        {
+                            source.SetRawValue(ServerItemAttributes.Gradable, "");
+                        }
+                    }
+
+                    //if (AllLoaders.GetServerType() == ServerType.RAthena) {
+                    //}
+                }
+
+                return value;
 			}
 
 			public T ConvertFrom<T>(Database.Tuple source, object value) {
@@ -906,7 +926,7 @@ namespace SDE.Editor.Generic.Core {
 				return returnedValue;
 			}
 
-			public T ConvertFrom<T>(Database.Tuple source, object value) {
+                public T ConvertFrom<T>(Database.Tuple source, object value) {
 				int itemType = source.GetValue<int>(ServerItemAttributes.Type);
 
 				if (value == null)
@@ -962,10 +982,117 @@ namespace SDE.Editor.Generic.Core {
 				return false;
 			}
 		}
-		#endregion
+        #endregion
 
-		#region Nested type: RoundBracketsConverter
-		public class RoundBracketsConverter : BracketsConverter {
+        #region Nested type: GradableConverter
+        public class GradableConverter : IValueConverter
+        {
+            #region IValueConverter Members
+            public object ConvertTo(Database.Tuple source, object value)
+            {
+                if (source == null) return value;
+
+                string returnedValue;
+
+                if (value == null)
+                {
+                    returnedValue = "";
+                }
+                else
+                {
+                    if (value is bool)
+                    {
+                        returnedValue = (bool)value ? "1" : "0";
+                    }
+                    else
+                    {
+                        string val = (string)value;
+
+                        if (val == "true" || val == "1")
+                            returnedValue = "1";
+                        else if (val == "false" || val == "0" || val == "")
+                            returnedValue = "0";
+                        else
+                            returnedValue = Boolean.Parse((string)value) ? "1" : "0";
+                    }
+                }
+
+                int itemType = source.GetValue<int>(ServerItemAttributes.Type);
+
+                if (_isNull(itemType, returnedValue))
+                    return "";
+
+                return returnedValue;
+            }
+
+            public T ConvertFrom<T>(Database.Tuple source, object value)
+            {
+                int itemType = source.GetValue<int>(ServerItemAttributes.Type);
+
+                if (value == null)
+                    return (T)(object)false;
+
+                string val = (string)value;
+
+                if (typeof(T) == typeof(bool))
+                {
+                    if (_isNull(itemType, value))
+                        return (T)(object)false;
+                    if (val == "true" || val == "1")
+                        return (T)(object)true;
+                    if (val == "false" || val == "0" || val == "")
+                        return (T)(object)false;
+
+                    return (T)(object)(val != "");
+                }
+
+                if (typeof(T) == typeof(string))
+                {
+                    if (_isNull(itemType, value))
+                        return (T)(object)"";
+                    if (val == "true" || val == "1")
+                        return (T)(object)"true";
+                    if (val == "false" || val == "" || val == "0")
+                        return (T)(object)"false";
+
+                    return (T)(object)((val != "") ? "true" : "false");
+                }
+
+                if (typeof(T) == typeof(int))
+                {
+                    if (_isNull(itemType, value))
+                        return (T)(object)0;
+                    if (val == "true" || val == "1")
+                        return (T)(object)1;
+                    if (val == "false" || val == "" || val == "0")
+                        return (T)(object)0;
+
+                    return (T)(object)(val != "");
+                }
+
+                return (T)value;
+            }
+            #endregion
+
+            private bool _isNull(int itemType, object value)
+            {
+                if (itemType != 4 && itemType != 5)
+                {
+                    string val = (string)value;
+
+                    if (val == "false" || val == "" || val == "0")
+                        return true;
+                }
+
+                return false;
+            }
+        }
+        #endregion
+
+
+
+        #region Nested type: RoundBracketsConverter
+        public class RoundBracketsConverter : BracketsConverter {
 			public RoundBracketsConverter() : base("{", "}") {
 			}
 		}

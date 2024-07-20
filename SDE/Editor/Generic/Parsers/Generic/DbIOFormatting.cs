@@ -196,7 +196,32 @@ namespace SDE.Editor.Generic.Parsers.Generic {
 			}
 		}
 
-		public static void TrySetIfDefaultEmptyAddHexJobEx(ReadableTuple<int> tuple, StringBuilder builder, DbAttribute attribute, string defaultValue) {
+        public static void TrySetIfGradable(ReadableTuple<int> tuple, StringBuilder builder, DbAttribute attribute, bool defaultValue)
+        {
+            int type = tuple.GetValue<int>(ServerItemAttributes.Type);
+            bool val = tuple.GetValue<bool>(attribute);
+
+            if (type != 4 && type != 5)
+            {
+                if (val)
+                {
+                    // This is not supposed to be allowed, but... we'll let it slide
+                    DbIOErrorHandler.Handle(StackTraceException.GetStrackTraceException(), "The gradable state on the item ID [" + tuple.GetKey<int>() + "] has been set to true but the item type is not an equipment. This is suspicious.", ErrorLevel.Warning);
+                    builder.AppendLine("\t" + attribute.AttributeName + ": true");
+                }
+                return;
+            }
+
+            if (val != defaultValue)
+            {
+                builder.Append("\t");
+                builder.Append(attribute.AttributeName);
+                builder.Append(": ");
+                builder.AppendLine(val.ToString().ToLower());
+            }
+        }
+
+        public static void TrySetIfDefaultEmptyAddHexJobEx(ReadableTuple<int> tuple, StringBuilder builder, DbAttribute attribute, string defaultValue) {
 			string val = "0x" + tuple.GetValue<string>(attribute);
 
 			if (val != "" && val != defaultValue && val.Length > 2 && val.ToLower() != "0xffffffff") {
