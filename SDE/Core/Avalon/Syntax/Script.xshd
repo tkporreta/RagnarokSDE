@@ -102,6 +102,7 @@
       <Word>getequipisenableref</Word>
       <Word>getequiprefinerycnt</Word>
       <Word>getequipweaponlv</Word>
+      <Word>getequiparmorlv</Word>
       <Word>getequippercentrefinery</Word>
       <Word>getareadropitem</Word>
       <Word>getequipcardcnt</Word>
